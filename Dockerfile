@@ -14,10 +14,10 @@ RUN npm install
 COPY . .
 
 # Exposer le port 3000
-EXPOSE 3000
+EXPOSE 3001
 
 # Démarrer l'application
-CMD ["npm", "start"]
+CMD ["npm", "run", "dev"]
 
 # Build stage
 FROM node:18-alpine as build
