@@ -4,19 +4,24 @@ FROM node:18-alpine
 # Set working directory
 WORKDIR /app
 
-# Install dependencies
+# Copy package files
 COPY package*.json ./
-RUN npm ci
 
-# Copy source files
+# Install dependencies
+RUN npm install
+
+# Copy the rest of the application
 COPY . .
+
+# Build the application
+RUN npm run build
+
+# Start the application
+CMD ["npm", "start"]
 
 # Set environment for production build
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
-
-# Build application
-RUN npm run build
 
 # Set runtime environment
 ENV PORT=3001
@@ -24,10 +29,6 @@ ENV HOSTNAME="0.0.0.0"
 
 # Expose port
 EXPOSE 3001
-
-# Start production server
-CMD ["npm", "start"]
-
 
 # Build stage
 FROM node:18-alpine as build
