@@ -9,10 +9,6 @@ RUN npm install
 # Copy source files
 COPY . .
 
-# Build application
-ENV NODE_ENV=production
-RUN npm run build
-
 # Expose port
 EXPOSE 3001
 
@@ -20,5 +16,5 @@ EXPOSE 3001
 ENV PORT=3001
 ENV HOSTNAME="0.0.0.0"
 
-# Start application
-CMD ["npm", "start"] 
+# Start development server
+CMD ["npm", "run", "dev"] 
