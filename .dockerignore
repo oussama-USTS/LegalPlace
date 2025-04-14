@@ -1,8 +1,12 @@
+.git
+.gitignore
 node_modules
 .next
-.git
-.env*
-npm-debug.log*
+.env
+.env.local
+.env.development
 README.md
-.vscode
-.idea 
+.dockerignore
+Dockerfile
+docker-compose*
+*.log 

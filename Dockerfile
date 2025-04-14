@@ -6,20 +6,27 @@ WORKDIR /app
 
 # Install dependencies
 COPY package*.json ./
-RUN npm install
+RUN npm ci
 
 # Copy source files
 COPY . .
 
-# Set environment variables
+# Set environment for production build
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
+
+# Build application
+RUN npm run build
+
+# Set runtime environment
 ENV PORT=3001
 ENV HOSTNAME="0.0.0.0"
 
 # Expose port
 EXPOSE 3001
 
-# Start development server
-CMD ["npm", "run", "dev"]
+# Start production server
+CMD ["npm", "start"]
 
 
 # Build stage
