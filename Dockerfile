@@ -1,31 +1,22 @@
-# Base image
+# Utiliser Node.js comme image de base
 FROM node:18-alpine
 
-# Set working directory
+# Définir le répertoire de travail
 WORKDIR /app
 
-# Install dependencies
+# Copier les fichiers package.json et package-lock.json
 COPY package*.json ./
-RUN npm ci
 
-# Copy source files
+# Installer les dépendances
+RUN npm install
+
+# Copier le reste des fichiers de l'application
 COPY . .
 
-# Build application
-ENV NODE_ENV=production
-RUN npm run build
-
-# Install curl for healthcheck
-RUN apk add --no-cache curl
-
-# Expose port
+# Exposer le port 3000
 EXPOSE 3000
 
-# Set runtime environment
-ENV PORT=3000
-ENV HOSTNAME="0.0.0.0"
-
-# Start application
+# Démarrer l'application
 CMD ["npm", "start"]
 
 # Build stage
