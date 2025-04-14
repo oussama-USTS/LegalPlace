@@ -23,12 +23,21 @@ services:
 
   web:
     build: .
-    container_name: legalplace-dev
+    container_name: legalplace
     ports:
       - "3000:3000"
     volumes:
       - .:/app
       - /app/node_modules
     environment:
-      - NODE_ENV=development
-    command: npm run dev
+      - NODE_ENV=production
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    labels:
+      - "coolify.enable=true"
+      - "coolify.version=v1"

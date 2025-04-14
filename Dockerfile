@@ -6,16 +6,27 @@ WORKDIR /app
 
 # Install dependencies
 COPY package*.json ./
-RUN npm install
+RUN npm ci
 
 # Copy source files
 COPY . .
 
+# Build application
+ENV NODE_ENV=production
+RUN npm run build
+
+# Install curl for healthcheck
+RUN apk add --no-cache curl
+
 # Expose port
 EXPOSE 3000
 
-# Start development server
-CMD ["npm", "run", "dev"]
+# Set runtime environment
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
+
+# Start application
+CMD ["npm", "start"]
 
 # Build stage
 FROM node:18-alpine as build
