@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  frontend:
+  app:
     build:
       context: .
       dockerfile: Dockerfile
@@ -9,6 +9,8 @@ services:
       - "3001:3001"
     environment:
       - NODE_ENV=production
+      - PORT=3001
+      - HOSTNAME=0.0.0.0
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://0.0.0.0:3001"]
