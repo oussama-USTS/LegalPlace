@@ -2,22 +2,20 @@ FROM node:18-alpine
 
 WORKDIR /app
 
-# Install curl for healthcheck
+COPY package*.json ./
+
 RUN apk add --no-cache curl
 
-# Install dependencies
-COPY package*.json ./
 RUN npm install
 
-# Copy source files
 COPY . .
 
-# Expose port
-EXPOSE 3001
+RUN npm run build
 
-# Set environment variables
 ENV PORT=3001
 ENV HOSTNAME="0.0.0.0"
+ENV NODE_ENV=production
 
-# Start development server
-CMD ["npm", "run", "dev"] 
+EXPOSE 3001
+
+CMD ["npm", "start"] 
