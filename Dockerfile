@@ -4,18 +4,21 @@ WORKDIR /app
 
 # Install dependencies
 COPY package*.json ./
-RUN npm install --production=false
+RUN npm install
 
 # Copy source files
 COPY . .
 
 # Build application
 ENV NODE_ENV=production
-ENV NEXT_TELEMETRY_DISABLED=1
 RUN npm run build
 
 # Expose port
-EXPOSE 3000
+EXPOSE 3001
+
+# Set environment variables
+ENV PORT=3001
+ENV HOSTNAME="0.0.0.0"
 
 # Start application
 CMD ["npm", "start"] 
