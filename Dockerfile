@@ -11,6 +11,10 @@ RUN npm install
 # Copy source files
 COPY . .
 
+# Set environment variables
+ENV PORT=3001
+ENV HOSTNAME="0.0.0.0"
+
 # Expose port
 EXPOSE 3001
 
