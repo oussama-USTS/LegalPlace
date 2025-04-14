@@ -4,17 +4,18 @@ services:
   web:
     build: .
     ports:
-      - "3001"
+      - "3001:3001"
     environment:
       - NODE_ENV=development
       - PORT=3001
+      - HOSTNAME=0.0.0.0
     volumes:
       - .:/app
       - /app/node_modules
     command: npm run dev
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3001"]
+      test: ["CMD", "curl", "-f", "http://0.0.0.0:3001"]
       interval: 30s
       timeout: 10s
       retries: 3
