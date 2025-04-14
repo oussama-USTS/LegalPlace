@@ -1,37 +1,13 @@
 version: '3.8'
 
 services:
-  web:
-    build: .
-    container_name: legalplace
+  # Frontend service
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - "3001"
-    volumes:
-      - .:/app
-      - /app/node_modules
+      - "3000"
     environment:
-      - NODE_ENV=development
-    command: npm run dev
-
-  nginx:
-    image: nginx:alpine
-    container_name: legalplace-nginx
-    restart: always
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./nginx/conf.d:/etc/nginx/conf.d
-      - ./nginx/ssl:/etc/nginx/ssl
-      - ./nginx/logs:/var/log/nginx
-    depends_on:
-      - web
-    networks:
-      - legalplace-network
-
-networks:
-  legalplace-network:
-    driver: bridge
-
-volumes:
-  nginx-data: 
+      - NODE_ENV=production
+    restart: unless-stopped
